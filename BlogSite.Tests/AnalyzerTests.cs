@@ -7,16 +7,28 @@ namespace BlogSite.Tests
 {
     public class AnalyzerTests
     {
+        private static BloggingContext GetBloggingContext()
+        {
+            var options = new DbContextOptionsBuilder<BloggingContext>().UseInMemoryDatabase(databaseName: "Test").Options;
+            return new BloggingContext(options);
+        }
+
         [Fact]
         public void CountOfBlogsReturnsValueFronDatabase()
         {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=BlogSite;Trusted_Connection=True;ConnectRetryCount=0";
-            var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            optionsBuilder.UseSqlServer(connection);
-            BloggingContext bloggingContext = new BloggingContext(optionsBuilder.Options);
+            var bloggingContext = GetBloggingContext();
 
             Analyzer analyzer = new Analyzer(bloggingContext);
             Assert.Equal(3, analyzer.GetCountOfBlogs());
+        }
+
+        [Fact]
+        public void AverageNumberOfPostsReturnsValueFronDatabase()
+        {
+            var bloggingContext = GetBloggingContext();
+
+            Analyzer analyzer = new Analyzer(bloggingContext);
+            Assert.Equal(3.5, analyzer.GetAveragePostsPerBlogs());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BlogSite.Models
 
     public class Analyzer : IAnalyzer
     {
-        private BloggingContext _bloggingContext;
+        private readonly BloggingContext _bloggingContext;
 
         public Analyzer(BloggingContext bloggingContext)
         {
@@ -32,13 +32,13 @@ namespace BlogSite.Models
 
         public int GetCountOfBlogs()
         {
-            var result = _bloggingContext.Set<UnmappedIntegerValue>().FromSql("exec dbo.uspCountOfBlogs");
+            var result = _bloggingContext.UnmappedIntegerValue.FromSql("exec dbo.uspCountOfBlogs");
             return result.First().Value;
         }
 
         public double GetAveragePostsPerBlogs()
         {
-            var result = _bloggingContext.Set<UnmappedDoubleValue>().FromSql("exec dbo.uspAverageNumPosts");
+            var result = _bloggingContext.UnmappedIntegerValue.FromSql("exec dbo.uspAverageNumPosts");
             return result.First().Value;
         }
     }
