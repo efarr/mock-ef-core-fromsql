@@ -38,7 +38,7 @@ namespace BlogSite.Models
 
         public double GetAveragePostsPerBlogs()
         {
-            var result = _bloggingContext.UnmappedIntegerValue.FromSql("exec dbo.uspAverageNumPosts");
+            var result = _bloggingContext.UnmappedDoubleValue.FromSql("exec dbo.uspAverageNumPosts");
             return result.First().Value;
         }
     }

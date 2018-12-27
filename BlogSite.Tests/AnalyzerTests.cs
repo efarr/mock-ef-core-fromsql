@@ -1,5 +1,4 @@
-﻿using System;
-using BlogSite.Models;
+﻿using BlogSite.Models;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -18,6 +17,10 @@ namespace BlogSite.Tests
         {
             var bloggingContext = GetBloggingContext();
 
+            var response = new AsyncEnumerableQueryableReturn<UnmappedIntegerValue>(new UnmappedIntegerValue { Value = 3 });
+
+            bloggingContext.UnmappedIntegerValue = bloggingContext.UnmappedIntegerValue.MockFromSql(response);
+
             Analyzer analyzer = new Analyzer(bloggingContext);
             Assert.Equal(3, analyzer.GetCountOfBlogs());
         }
@@ -27,8 +30,13 @@ namespace BlogSite.Tests
         {
             var bloggingContext = GetBloggingContext();
 
+            var response = new AsyncEnumerableQueryableReturn<UnmappedDoubleValue>(new UnmappedDoubleValue { Value = 3.5 });
+
+            bloggingContext.UnmappedDoubleValue = bloggingContext.UnmappedDoubleValue.MockFromSql(response);
+
             Analyzer analyzer = new Analyzer(bloggingContext);
             Assert.Equal(3.5, analyzer.GetAveragePostsPerBlogs());
         }
+
     }
 }
